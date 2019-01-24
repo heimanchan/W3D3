@@ -62,3 +62,89 @@ Migrating to CreateShortenedUrl (20190123230108)
   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
   [1m[35mSQL (35.5ms)[0m  [1m[32mINSERT INTO "shortened_urls" ("user_id", "long_url", "short_url", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 2], ["long_url", "kevin is funny"], ["short_url", "Fl03GsCvodbWHedzJBnHpyhGAsSN"], ["created_at", "2019-01-23 23:40:59.742243"], ["updated_at", "2019-01-23 23:40:59.742243"]]
   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4762635147840476445)[0m
+  [1m[35m (14.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateVisits (20190124000622)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (18.1ms)[0m  [1m[35mCREATE TABLE "visits" ("id" bigserial primary key, "user_id" integer, "short_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_visits_on_user_id" ON "visits"  ("user_id")[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_visits_on_short_id" ON "visits"  ("short_id")[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20190124000622"]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(4762635147840476445)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mVisit Load (1.2ms)[0m  [1m[34mSELECT "visits".* FROM "visits"[0m
+  [1m[36mShortenedUrl Load (0.9ms)[0m  [1m[34mSELECT "shortened_urls".* FROM "shortened_urls"[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mShortenedUrl Load (0.4ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" ORDER BY "shortened_urls"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "visits" ("user_id", "short_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["short_id", 1], ["created_at", "2019-01-24 00:16:23.685601"], ["updated_at", "2019-01-24 00:16:23.685601"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT "visits".* FROM "visits"[0m
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mVisit Load (0.4ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.6ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mShortenedUrl Load (0.4ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" ORDER BY "shortened_urls"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT "visits".* FROM "visits" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mShortenedUrl Load (0.3ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" ORDER BY "shortened_urls"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.3ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.3ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mShortenedUrl Load (0.6ms)[0m  [1m[34mSELECT "shortened_urls".* FROM "shortened_urls" INNER JOIN "visits" ON "shortened_urls"."id" = "visits"."short_id" WHERE "visits"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "visits" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT DISTINCT "users"."email" FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(DISTINCT "users"."email") FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mShortenedUrl Load (0.6ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" ORDER BY "shortened_urls"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mShortenedUrl Load (0.5ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" WHERE "shortened_urls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "visits" ("user_id", "short_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["short_id", 1], ["created_at", "2019-01-24 01:02:17.596115"], ["updated_at", "2019-01-24 01:02:17.596115"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mVisit Load (0.8ms)[0m  [1m[34mSELECT "visits".* FROM "visits"[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "visits" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(DISTINCT "users"."email") FROM "users" INNER JOIN "visits" ON "users"."id" = "visits"."user_id" WHERE "visits"."short_id" = $1[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.4ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" ORDER BY "visits"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mShortenedUrl Load (0.4ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" WHERE "shortened_urls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "visits" ("user_id", "short_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["short_id", 1], ["created_at", "2019-01-24 01:17:51.114363"], ["updated_at", "2019-01-24 01:17:51.114363"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mShortenedUrl Load (0.7ms)[0m  [1m[34mSELECT  "shortened_urls".* FROM "shortened_urls" ORDER BY "shortened_urls"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVisit Load (0.6ms)[0m  [1m[34mSELECT  "visits".* FROM "visits" WHERE "visits"."short_id" = $1 LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (0.5ms)[0m  [1m[34mSELECT  "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (49.0ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (43.3ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND (#{Time.now} - created_at) LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (0.6ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10) LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(DISTINCT "visits"."created_at") FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10)[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.6ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10) LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10)[0m  [["short_id", 1]]
+  [1m[36mVisit Load (0.7ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10) LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[36mVisit Load (0.6ms)[0m  [1m[34mSELECT DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND ((#{Time.now} - created_at) < 10)[0m  [["short_id", 1]]
+  [1m[36mVisit Load (25.8ms)[0m  [1m[34mSELECT  DISTINCT "visits"."created_at" FROM "visits" WHERE "visits"."short_id" = $1 AND (created_at < '2019-01-24 01:18:32.871446') LIMIT $2[0m  [["short_id", 1], ["LIMIT", 11]]
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(DISTINCT "visits"."created_at") FROM "visits" WHERE "visits"."short_id" = $1 AND (created_at < '2019-01-24 01:18:42.903761')[0m  [["short_id", 1]]
